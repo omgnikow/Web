@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Rocket League : du football avec des voitures</title>
+    <style>
+        :root {
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            --bg: #f3f6fb;
+            --surface: #ffffff;
+            --ink: #0d1b2e;
+            --muted: #51607a;
+            --blue: #0b6bff;
+            --orange: #ff6a13;
+            --line: #d5deeb;
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #08111f;
+                --surface: #0f1c31;
+                --ink: #eaf1ff;
+                --muted: #9db0cf;
+                --blue: #4d94ff;
+                --orange: #ff8a3d;
+                --line: #233556;
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #08111f;
+            --surface: #0f1c31;
+            --ink: #eaf1ff;
+            --muted: #9db0cf;
+            --blue: #4d94ff;
+            --orange: #ff8a3d;
+            --line: #233556;
+            color-scheme: dark;
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 17px/1.6 "Trebuchet MS", "Segoe UI", system-ui, sans-serif
+        }
+
+        .wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: Impact, "Arial Narrow Bold", "Haettenschweiler", sans-serif;
+            font-weight: 400;
+            letter-spacing: .01em;
+            line-height: 1.05;
+            margin: 0
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 72px 0 56px;
+            border-bottom: 6px solid var(--orange);
+            background: linear-gradient(100deg, var(--blue) 0 50%, var(--orange) 50% 100%);
+            color: #fff
+        }
+
+        .hero .wrap {
+            position: relative
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 13vw, 7.5rem);
+            text-shadow: 0 4px 0 rgba(0, 0, 0, .25)
+        }
+
+        .hero p {
+            max-width: 34em;
+            font-size: 1.15rem;
+            margin: 18px 0 0;
+            background: rgba(8, 17, 31, .72);
+            padding: 12px 16px;
+            border-left: 5px solid #fff
+        }
+
+        .hero svg {
+            position: absolute;
+            right: -30px;
+            bottom: -18px;
+            width: min(60%, 380px);
+            opacity: .95
+        }
+
+        section {
+            padding: 44px 0 8px
+        }
+
+        h2 {
+            font-size: clamp(1.9rem, 6vw, 2.8rem);
+            margin-bottom: 14px;
+            color: var(--blue)
+        }
+
+        p {
+            margin: 0 0 14px;
+            max-width: 62ch
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-top: 18px
+        }
+
+        .card {
+            background: var(--surface);
+            border: 2px solid var(--line);
+            border-radius: 6px;
+            padding: 16px
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+            color: var(--orange)
+        }
+
+        .card p {
+            font-size: .95rem;
+            color: var(--muted);
+            margin: 0
+        }
+
+        .facts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6px
+        }
+
+        .fact {
+            flex: 1 1 150px;
+            background: var(--surface);
+            border-left: 6px solid var(--blue);
+            padding: 10px 14px
+        }
+
+        .fact b {
+            display: block;
+            font: 1.7rem Impact, "Arial Narrow Bold", sans-serif;
+            color: var(--ink)
+        }
+
+        .fact span {
+            color: var(--muted);
+            font-size: .9rem
+        }
+
+        .ranks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0
+        }
+
+        .rank {
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+            padding: 9px 14px;
+            border-radius: 4px;
+            color: #101820
+        }
+
+        .rank:focus-visible,
+        .tab:focus-visible {
+            outline: 3px solid var(--ink);
+            outline-offset: 2px
+        }
+
+        #rankInfo {
+            background: var(--surface);
+            border: 2px solid var(--line);
+            padding: 14px 16px;
+            border-radius: 6px;
+            min-height: 3.6em
+        }
+
+        .tips {
+            padding-left: 20px;
+            max-width: 62ch
+        }
+
+        .tips li {
+            margin-bottom: 8px
+        }
+
+        footer {
+            margin-top: 48px;
+            padding: 26px 0 34px;
+            border-top: 2px solid var(--line);
+            color: var(--muted);
+            font-size: .9rem
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero">
+        <div class="wrap">
+            <h1>Rocket League</h1>
+            <p>Des voitures à réaction, un ballon géant et un but à marquer. Le football comme vous ne l’avez jamais
+                joué.</p>
+        </div>
+        <svg viewBox="0 0 300 150" aria-hidden="true">
+            <circle cx="225" cy="55" r="42" fill="#fff" stroke="#08111f" stroke-width="5" />
+            <path d="M225 30l18 13-7 21h-22l-7-21z" fill="#08111f" />
+            <path d="M20 112h130l18-22 38-6 10 18v14H20z" fill="#08111f" />
+            <rect x="26" y="96" width="70" height="16" fill="#ff6a13" />
+            <circle cx="70" cy="122" r="17" fill="#fff" stroke="#08111f" stroke-width="5" />
+            <circle cx="150" cy="122" r="17" fill="#fff" stroke="#08111f" stroke-width="5" />
+            <path d="M20 108H-10M20 118H-24" stroke="#fff" stroke-width="6" stroke-linecap="round" />
+        </svg>
+    </header>
+
+    <main class="wrap">
+        <section>
+            <h2>Le principe</h2>
+            <p>Rocket League oppose deux équipes de voitures radiocommandées sur un terrain fermé. Le but : pousser un
+                énorme ballon dans le but adverse. Vous pouvez sauter, vous propulser grâce au turbo et même voler dans
+                les airs.</p>
+            <p>Les règles se comprennent en une minute. Maîtriser la physique du ballon, elle, prend des années.</p>
+            <div class="facts">
+                <div class="fact"><b>2015</b><span>sortie du jeu, par Psyonix</span></div>
+                <div class="fact"><b>3 contre 3</b><span>le format standard</span></div>
+                <div class="fact"><b>5 min</b><span>un match classique</span></div>
+                <div class="fact"><b>Gratuit</b><span>depuis septembre 2020</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Les modes de jeu</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Compétitif</h3>
+                    <p>En 1v1, 2v2 ou 3v3, pour grimper les rangs en équipe ou en solo.</p>
+                </div>
+                <div class="card">
+                    <h3>Hoops</h3>
+                    <p>Du basket : on marque dans un panier surélevé.</p>
+                </div>
+                <div class="card">
+                    <h3>Rumble</h3>
+                    <p>Des bonus aléatoires : aimant, coup de poing, grappin…</p>
+                </div>
+                <div class="card">
+                    <h3>Dropshot</h3>
+                    <p>Le sol se brise sous les impacts. Il faut percer le terrain adverse.</p>
+                </div>
+                <div class="card">
+                    <h3>Snow Day</h3>
+                    <p>Le ballon est remplacé par un palet de hockey qui glisse.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Les rangs</h2>
+            <p>Touchez un rang pour voir à quoi il ressemble.</p>
+            <div class="ranks" id="ranks"></div>
+            <div id="rankInfo" aria-live="polite">Choisissez un rang.</div>
+        </section>
+
+        <section>
+            <h2>Pour bien débuter</h2>
+            <ol class="tips">
+                <li>Passez par l’entraînement libre pour apprendre à contrôler la voiture.</li>
+                <li>Ne foncez pas toujours sur le ballon : gardez un coéquipier en défense.</li>
+                <li>Gérez votre turbo, c’est une ressource limitée.</li>
+                <li>Apprenez le saut, le double saut, puis le demi-flip.</li>
+                <li>Regardez vos replays pour comprendre vos erreurs.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Et l’esport ?</h2>
+            <p>Rocket League a sa scène professionnelle, la Rocket League Championship Series (RLCS). Les meilleures
+                équipes du monde s’y affrontent dans de grands tournois, avec des gestes aériens spectaculaires.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">Page fan non officielle. Rocket League appartient à Psyonix et Epic Games.</div>
+    </footer>
+
+    <script>
+        var data = [
+            ["Bronze", "#b0743a", "Les premiers pas : on apprend à toucher la balle et à rouler."],
+            ["Argent", "#aab4c2", "Les bases sont là, les passes et les défenses s’organisent."],
+            ["Or", "#f2c230", "Un vrai jeu d’équipe commence à apparaître."],
+            ["Platine", "#5fd0d6", "Les sauts aériens deviennent réguliers."],
+            ["Diamant", "#4d94ff", "Bonne gestion du turbo et des rotations."],
+            ["Champion", "#a56bff", "Le jeu est rapide, précis et très organisé."],
+            ["Grand Champion", "#ff5a5f", "L’élite : mécaniques avancées et lecture parfaite du jeu."],
+            ["Supersonic Legend", "#ffffff", "Le sommet absolu du classement."]
+        ];
+        var box = document.getElementById("ranks"), info = document.getElementById("rankInfo");
+        data.forEach(function (r) {
+            var b = document.createElement("button");
+            b.className = "rank"; b.textContent = r[0]; b.style.background = r[1];
+            b.onclick = function () { info.textContent = r[0] + " : " + r[2] };
+            box.appendChild(b);
+        });
+    </script>
+</body>
+
+</html>
