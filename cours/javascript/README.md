@@ -1,4 +1,4 @@
-# JavaScript
+# HTML et CSS
 
 Fichiers produits pendant les seances consacrees
-au JavaScript.
+au HTML et au CSS.
